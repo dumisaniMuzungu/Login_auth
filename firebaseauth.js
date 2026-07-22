@@ -1,17 +1,10 @@
 
-  // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-//   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, setDoc, doc } from "@firebase/firestore";
-import { from } from "node:stream/iter";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
+// 1. Firebase Configuration (using your project credentials)
+const firebaseConfig = {
     apiKey: "AIzaSyAtc4dk85IkgFUVPyxNGsMH4dwoWCH2km0",
     authDomain: "authentication-html-9e40e.firebaseapp.com",
     projectId: "authentication-html-9e40e",
@@ -19,18 +12,46 @@ import { from } from "node:stream/iter";
     messagingSenderId: "210748274464",
     appId: "1:210748274464:web:2ff9a7cfc018c2ace6c945",
     measurementId: "G-08KRE7SE99"
-  };
+};
 
- 
-// Initialize Firebase
+// 2. Initialize Firebase and Get Auth Reference
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const email = document.getElementById('email').value;
-const password = document.getElementById('password').value;
+// 3. Set Up DOM Event Listeners Once the HTML is Loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.querySelector(".login-form");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const statusMessage = document.getElementById("signInMessage");
 
-const submit = document.getElementById('submitSignIn');
-submit.addEventListener("click", function(event){
-    event.preventDefault()
-    alert(5)
-})
+  // Handle Form Submit Event (prevents page reload)
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // <-- Crucial! Stops the page from refreshing
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    statusMessage.innerText = "Logging in...";
+    statusMessage.style.color = "blue";
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("Logged in successfully!", userCredential.user);
+        
+        // Redirect to home.html on successful login
+        window.location.href = "home.html";
+      })
+      .catch((error) => {
+        console.error("Login error:", error.message);
+        statusMessage.style.color = "red";
+        
+        // Provide friendly error feedback
+        if (error.code === 'auth/invalid-credential') {
+          statusMessage.innerText = "Incorrect email or password.";
+        } else {
+          statusMessage.innerText = `Error: ${error.message}`;
+        }
+      });
+  });
+});
