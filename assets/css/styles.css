@@ -22,15 +22,18 @@
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
+    color: #070705;
 }
 
 body{
     height:100vh;
-    background: linear-gradient(
+    background:
+    radial-gradient( 50% 20%, rgba(15, 14, 13, 0.35), transparent 35%),
+    linear-gradient(
         135deg,
-        #0F172A 0%,
-        #1E3A8A 45%,
-        #3bf6a2 100%
+        #f1e903 0%,
+        #28281e 0%,
+        #070705 100%
     );
 }
 .login{
@@ -40,6 +43,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
+    
 }
 
 .background{
@@ -48,6 +52,7 @@ body{
     height:100%;
     object-fit:cover;
     z-index:-1;
+    color: #070705;
 }
 ----------
 .login-form{
@@ -60,9 +65,10 @@ body{
     color:var(--white);
     box-shadow:0 15px 40px rgba(0,0,0,.25);
 }
-.login-form h1{
+.login-form h5{
     text-align:center;
     margin-bottom:30px;
+      background-color: #070705;
 }
 
 .input-box{
@@ -72,6 +78,7 @@ body{
     border-radius:30px;
     padding:0 20px;
     margin-bottom:20px;
+    font-size: 10;
 }
 
 .input-box input{
@@ -82,14 +89,17 @@ body{
     outline:none;
     color:#fff;
     font-size:16px;
+    
 }
 
 .input-box input::placeholder{
     color:#fff;
+    
 }
 
 .input-box i{
     font-size:20px;
+    color: #f1e903;
 }
 
 .options{
@@ -98,6 +108,7 @@ body{
     align-items:center;
     font-size:14px;
     margin-bottom:20px;
+    
 }
 
 .options a{
@@ -107,6 +118,7 @@ body{
 
 .options a:hover{
     text-decoration:underline;
+    background-color: #070705;
 }
 
 button{
@@ -153,4 +165,20 @@ button:hover{
     gap:10px;
 }
 
+}
+input {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    /* font-size:20px; */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: rgb(253, 253, 253) !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-size:20px;
 }
